@@ -7,7 +7,9 @@ module.exports = {
         'utama': '#675d50',
         'tulisan' :'#a67c00',
         'abu':'#d9d9d9',
-        'kuning':'#ffe462'
+        'kuning':'#ffe462',
+        'footer':'#f3deba',
+        'footer_t':'#8d816c'
       },
       fontFamily:{
         'inter':['Inter','sans-serif'],

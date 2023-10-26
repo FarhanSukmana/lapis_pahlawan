@@ -49,51 +49,16 @@ html {
     </div>
     <!-- Navbar End -->
 
-    <!-- Promo Start -->
-    <div id="Promo" class="flex flex-col w-full h-full m-0 p-6 pt-24">
-      <!--Judul  -->
-      <div class>
-        <h1 class="text-utama text-3xl font-bold">Promo Terbaru</h1>
-        <div class="w-60 h-2 bg-abu"><div class="h-2 w-1/4 bg-utama"></div></div>
-      </div>
-
-      <!-- Slider Image -->
-      <div class="flex flex-col items-center pt-12">
-        <!-- Gambar -->
-        <div class="flex items-center justify-center gap-x-8">
-          <!-- prev btn -->
-          <button class="bg-gray-500 text-white text-xl rounded-full w-8 h-8" @click="prev">Prev</button>
-          
-          <!-- Image Promo -->
-          <!-- Carousel -->
-          <div class="flex flex-col items-center">
-            <div class="relative w-64 h-64">
-              <transition name="fade" mode="out-in">
-                <img :key="currentSlide" src="./assets/Promo/1.jpg" alt="Promo Image" class="w-full h-full ">
-              </transition>
-            </div>
-
+    <!-- PROMO/Carousel -->
+    <div id="Promo" class="pt-20">
+      <CarouselComponent v-slot="{currentSlide}">
+        <slideComponent v-for="(slide, index) in carouselSlides" :key="index">
+          <div v-show="currentSlide === index+1" class="shadow-2xl">
+            <img :src="require(`./assets/Promo/${slide}.jpg`)" class="h-[400px] bg-cover rounded-xl shadow-2xl" alt="">
           </div>
-
-          <button class="bg-abu text-white text-xl flex rounded-full w-8 h-8" @click="next"></button>
-        </div>
-
-        <!-- Dots -->
-        <div class="flex item-center justify-center gap-x-4 py-4">
-          <button
-          v-for="number in 4" :key="'slider2-dot-' + number"
-          class="h-4 rounded-full "
-          :class="{
-            'bg-abu w-4': currentSlide !== number,
-            'bg-utama w-12': currentSlide === number,
-          }"
-          @click="currentSlide = number">
-          
-          </button>
-        </div>
-      </div>
+        </slideComponent>
+      </CarouselComponent>
     </div>
-    <!-- Promo End -->
 
     <!-- PRODUK -->
     <div id="Produk" class="pt-20">
@@ -104,19 +69,30 @@ html {
     <div id="Artikel" class="pt-20">
       <ArtikelComponent />
     </div>
+
+    <!-- Footer -->
+    <div>
+      <FooterComponent />
+    </div>
   </div>
 </template>
 
 <script> 
 import ProductComponent from "./components/ProdukComponent.vue"
 import ArtikelComponent from "./components/ArtikelComponent.vue"
+import FooterComponent from "./components/FooterComponent.vue"
+import CarouselComponent from "./components/Carousel.vue"
+import slideComponent from "./components/slide.vue"
 
 
 export default {
   name: "App",
   components:{
         ProductComponent,
-        ArtikelComponent
+        ArtikelComponent,
+        FooterComponent,
+        CarouselComponent,
+        slideComponent
     },
   data() {
     return {
@@ -128,6 +104,11 @@ export default {
         "./assets/Promo/4.png",
       ],
     };
+  },
+  setup(){
+    const carouselSlides = ["bg-1","bg-2","bg-3","bg-4"];
+
+    return {carouselSlides}
   },
   methods: {
     prev() {
