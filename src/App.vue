@@ -7,10 +7,13 @@ html {
 
 <template>
   <div id="tentang" class="overflow-hidden" >
-    <div id="Container-Promo" class="flex flex-col font-inter	bg-promo bg-cover">
+    <div id="Container-Promo" class="flex flex-col font-inter	bg-promo bg-cover ">
       
       <!-- Navbar  Start-->
-      <div id="navbar" class="flex justify-between px-6 bg-utama/80 fixed top-0 left-0 right-0 shadow-md" style="z-index: 1000;">
+      <div id="navbar" 
+      class="flex justify-between px-6 bg-utama/80 fixed top-0 left-0 right-0 shadow-md fixed w-full text-white transition-transform duration-300 transform" 
+      :class="{ '-translate-y-full': !isScrolled, 'translate-y-0': isScrolled }"
+      style="z-index: 1000;">
 
         <!-- Gambar -->
         <div class="top-0 left-0 p-0 -m-4 px-6" >
@@ -50,14 +53,19 @@ html {
     <!-- Navbar End -->
 
     <!-- PROMO/Carousel -->
-    <div id="Promo" class="pt-20">
+    <!-- <div id="Promo" class="pt-20">
       <CarouselComponent v-slot="{currentSlide}">
         <slideComponent v-for="(slide, index) in carouselSlides" :key="index">
           <div v-show="currentSlide === index+1" class="shadow-2xl">
-            <img :src="require(`./assets/Promo/${slide}.jpg`)" class="h-[400px] bg-cover rounded-xl shadow-2xl" alt="">
+            <img :src="require(`./assets/Promo/${slide}.jpg`)" class="h-[400px] w-[300px] bg-cover rounded-xl shadow-2xl" alt="">
           </div>
         </slideComponent>
       </CarouselComponent>
+    </div> -->
+    <div>
+      <transition name="slide">
+        <PromoComponent />
+      </transition>
     </div>
 
     <!-- PRODUK -->
@@ -81,8 +89,7 @@ html {
 import ProductComponent from "./components/ProdukComponent.vue"
 import ArtikelComponent from "./components/ArtikelComponent.vue"
 import FooterComponent from "./components/FooterComponent.vue"
-import CarouselComponent from "./components/Carousel.vue"
-import slideComponent from "./components/slide.vue"
+import PromoComponent from "./components/PromoComponent.vue"
 
 
 export default {
@@ -91,24 +98,18 @@ export default {
         ProductComponent,
         ArtikelComponent,
         FooterComponent,
-        CarouselComponent,
-        slideComponent
+        PromoComponent
     },
   data() {
     return {
-      currentSlide: 1,
-      slides: [
-        "./assets/Promo/1.png",
-        "./assets/Promo/2.png",
-        "./assets/Promo/3.png",
-        "./assets/Promo/4.png",
-      ],
+      isScrolled : true,
     };
   },
-  setup(){
-    const carouselSlides = ["bg-1","bg-2","bg-3","bg-4"];
-
-    return {carouselSlides}
+  mounted() {
+    window.addEventListener("scroll", this.handleScroll);
+  },
+  beforeUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
   },
   methods: {
     prev() {
@@ -124,6 +125,17 @@ export default {
       } else {
         this.currentSlide++;
       }
+    },
+    handleScroll(){
+      const currentScrollY = window.scrollY;
+         if (currentScrollY > this.prevScrollY) {
+      // Scroll ke bawah
+           this.isScrolled = false;
+         } else {
+      // Scroll ke atas
+            this.isScrolled =true;
+          }
+          this.prevScrollY = currentScrollY;
     },
   },
 };

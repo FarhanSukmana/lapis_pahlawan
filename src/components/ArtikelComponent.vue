@@ -16,6 +16,7 @@
             </div>
             <div class="px-4 text-tulisan">
                 <h2>Kategori : A</h2>
+                <i data-feather="instagram">GAKI</i>
             </div>
         </div>
         <!-- Artikel 2 -->
