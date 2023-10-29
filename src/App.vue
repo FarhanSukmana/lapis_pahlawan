@@ -53,15 +53,7 @@ html {
     <!-- Navbar End -->
 
     <!-- PROMO/Carousel -->
-    <!-- <div id="Promo" class="pt-20">
-      <CarouselComponent v-slot="{currentSlide}">
-        <slideComponent v-for="(slide, index) in carouselSlides" :key="index">
-          <div v-show="currentSlide === index+1" class="shadow-2xl">
-            <img :src="require(`./assets/Promo/${slide}.jpg`)" class="h-[400px] w-[300px] bg-cover rounded-xl shadow-2xl" alt="">
-          </div>
-        </slideComponent>
-      </CarouselComponent>
-    </div> -->
+
     <div>
       <transition name="slide">
         <PromoComponent />
